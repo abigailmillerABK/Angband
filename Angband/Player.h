@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
 #include "Object.h"
+#include "Character.h"
 
-class Player : public Object{
+class Player : public Character{
 
 public:
 	Player(int size);
-	void move(int x, int y);
 };

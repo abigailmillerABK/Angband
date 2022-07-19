@@ -9,14 +9,14 @@
 
 Player::Player(int size)
 {
+	thisObject = t_Null;
 	this->worldX = size / 2;
 	this->worldY = size / 2;
 	this->icon = "\033[94mP\033[94m";
-}
 
-void Player::move(int x, int y)
-{
-	this->worldX += x;
-	this->worldY += y;
+	health = 500;
+	attack = 100;
+	defense = 100;
+	speed = 6;
 }
 
