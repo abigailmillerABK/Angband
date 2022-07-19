@@ -22,7 +22,7 @@ void Map::draw()
 				std::cout << " " << myPlayer->icon << " ";
 			}
 			else {
-				std::cout << "\033[37m X \033[37m";
+				std::cout << "\033[37m   \033[37m";
 			}
 		}
 		std::cout << "\n";
