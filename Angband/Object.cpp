@@ -1,8 +1,8 @@
 #include "Object.h"
 
-int Object::getX() {
+int Object::GetX() {
 	return worldX;
 }
-int Object::getY() {
+int Object::GetY() {
 	return worldY;
 }

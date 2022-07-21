@@ -2,6 +2,7 @@
 #include <iostream>;
 #include "Map.h"
 #include "Player.h"
+#include "Scene.h"
 
 #define KEY_UP 72
 #define KEY_DOWN 80
@@ -11,9 +12,11 @@
 void main() {
 
 	int mapSize = 20;
-
-	Player* myPlayer = new Player(mapSize);
-	Map myMap = Map(myPlayer, mapSize);
+	int worldSize = 30;
+	
+	Scene* thisScene = new Scene(worldSize);
+	Player* myPlayer = new Player(0, 0, worldSize);
+	Map myMap = Map(myPlayer, thisScene, mapSize, worldSize);
 
 	myMap.draw();
 
@@ -40,5 +43,6 @@ void main() {
 			myMap.draw();
 			break;
 		}
+		std::cout << "\n\nAn event happens!!!";
 	}
 };

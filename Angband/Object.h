@@ -5,10 +5,14 @@ class Object {
 protected:
 	int worldX;
 	int worldY;
-	enum ObjectType {t_Wall,t_Enemy,t_Item,t_NPC, t_Null};
-	ObjectType thisObject;
+	std::string thisObject;
 public:
+	Object(int x, int y) {
+		worldX = x;
+		worldY = y;
+		icon = "X";
+	}
 	std::string icon;
-	int getX();
-	int getY();
+	int GetX();
+	int GetY();
 };
