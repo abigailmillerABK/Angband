@@ -13,10 +13,9 @@ void main() {
 
 	int mapSize = 20;
 	int worldSize = 30;
-	
+
 	Scene* thisScene = new Scene(worldSize);
-	Player* myPlayer = new Player(0, 0, worldSize);
-	Map myMap = Map(myPlayer, thisScene, mapSize, worldSize);
+	Map myMap = Map(thisScene->myPlayer, thisScene, mapSize, worldSize);
 
 	myMap.draw();
 
@@ -27,19 +26,31 @@ void main() {
 	while (true) {
 		switch (_getch()) {
 		case KEY_UP:
-			myPlayer->move(-1, 0);
+			if (thisScene->isCollision(thisScene->myPlayer->GetX() - 1, thisScene->myPlayer->GetY()) == nullptr){
+				thisScene->myPlayer->Move(-1, 0);
+			}
+			thisScene->Refresh();
 			myMap.draw();
 			break;
 		case KEY_DOWN:
-			myPlayer->move(1, 0);
+			if (thisScene->isCollision(thisScene->myPlayer->GetX() + 1, thisScene->myPlayer->GetY()) == nullptr) {
+				thisScene->myPlayer->Move(1, 0);
+			}
+			thisScene->Refresh();
 			myMap.draw();
 			break;
 		case KEY_RIGHT:
-			myPlayer->move(0, 1);
+			if (thisScene->isCollision(thisScene->myPlayer->GetX(), thisScene->myPlayer->GetY() + 1) == nullptr) {
+				thisScene->myPlayer->Move(0, 1);
+			}
+			thisScene->Refresh();
 			myMap.draw();
 			break;
 		case KEY_LEFT:
-			myPlayer->move(0, -1);
+			if (thisScene->isCollision(thisScene->myPlayer->GetX(), thisScene->myPlayer->GetY() - 1) == nullptr) {
+				thisScene->myPlayer->Move(0, -1);
+			}
+			thisScene->Refresh();
 			myMap.draw();
 			break;
 		}

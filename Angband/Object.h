@@ -1,18 +1,21 @@
 #pragma once
 #include <iostream>
+#include <string.h>
 
 class Object {
 protected:
 	int worldX;
 	int worldY;
+public:	
 	std::string thisObject;
-public:
 	Object(int x, int y) {
 		worldX = x;
 		worldY = y;
-		icon = "X";
+		//icon = "";
 	}
 	std::string icon;
 	int GetX();
 	int GetY();
+	virtual std::string Act() { return " "; };
+	virtual void Move(int x, int y) {};
 };

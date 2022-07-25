@@ -1,6 +1,5 @@
 #pragma once
 #include "Object.h"
-#include "Scene.h"
 
 class Character : public Object{
 
@@ -12,8 +11,6 @@ protected:
 	int speed;
 
 	int worldSize;
-
-	Scene* myScene;
 
 public:
 	Character(int x, int y, int worldSize) : Object{ x,y } 
@@ -36,20 +33,10 @@ public:
 		return speed;
 	}
 
-	void move(int x, int y) {
+	void Move(int x, int y) override{
 		//Check for collision
 		int moveX = worldX + x;
 		int moveY = worldY + y;
-
-		//std::list<Object>::iterator listPtr;
-		//for (listPtr = myScene->objList.begin(); listPtr != myScene->objList.end(); listPtr++) {
-		//	if (moveX == listPtr->GetX() && moveY == listPtr->GetY()) {
-		//		return; //No overlaps with other objects
-		//	}
-		//	else if (moveX < 0 || moveX > worldSize || moveY < 0 || moveY > worldSize) {
-		//		return;
-		//	}
-		//}
 
 		worldX = moveX;
 		worldY = moveY;

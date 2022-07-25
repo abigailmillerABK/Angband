@@ -29,12 +29,23 @@ void Map::draw()
 	for (int j = worldX; j < (worldX + gridSize); j++) {
 		for (int k = worldY; k < (gridSize+worldY); k++) {
 			//Check whether matched with coordinates of object/character
-			std::list<Object>::iterator listPtr;
+			std::list<Object>::iterator objectPtr;
+			std::list<Enemy>::iterator enemyPtr;
 			bool isIcon = false;
-			for (listPtr = myScene->objList.begin(); listPtr != myScene->objList.end(); listPtr++) {
-				if (j == listPtr->GetX() && k == listPtr->GetY()) {
-					std::cout <<listPtr->icon;
+			for (enemyPtr = myScene->enemyList.begin(); enemyPtr != myScene->enemyList.end(); enemyPtr++) {
+				if (j == enemyPtr->GetX() && k == enemyPtr->GetY()) {
+					std::cout << enemyPtr->icon;
 					isIcon = true;
+					break;
+				}
+			}
+			if (isIcon == false) {
+				for (objectPtr = myScene->objList.begin(); objectPtr != myScene->objList.end(); objectPtr++) {
+					if (j == objectPtr->GetX() && k == objectPtr->GetY()) {
+						std::cout << objectPtr->icon;
+						isIcon = true;
+						break;
+					}
 				}
 			}
 			if (j == myPlayer->GetX() && k == myPlayer->GetY()) {
@@ -42,7 +53,7 @@ void Map::draw()
 				isIcon = true;
 			}
 			//Check whether outside world boundaries
-			if (j<0 or j>worldSize or k<0 or k>worldSize) {
+			if (j<0 || j>worldSize || k<0 || k>worldSize) {
 				std::cout << "\033[37mX\033[37m";
 				isIcon = true;
 			}

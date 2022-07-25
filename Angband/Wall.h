@@ -6,6 +6,6 @@ public:
 	Wall(int x, int y) : Object{ x,y }
 	 {
 		thisObject = "t_Wall";
-		icon = "\033[33mw\033[33m";
+		icon = "\033[37mx\033[37m";
 	}
 };
