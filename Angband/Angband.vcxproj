@@ -135,6 +135,7 @@
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />

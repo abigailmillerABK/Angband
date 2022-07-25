@@ -44,6 +44,16 @@ public:
 	std::string getRace() {
 		return myRace;
 	};
+	void newRandom() {
+		//random race
+		std::string races[6] = { "Orc", "Rat", "Ooze", "Elf", "Halfling", "Skeleton"};
+		std::string titles[6] = { "conniving", "drooling", "shadowy", "reckless","unlawful","suspicious"};
+		std::string myRace = races[rand() % 6];
+		icon = myRace[0];
+		std::string title = titles[rand() % 6];
+		name = "a " + title + " " + myRace;
+		//random name
+	}
 	int getHealth() {
 		return health;
 	}
@@ -55,6 +65,9 @@ public:
 	}
 	int getSpeed() {
 		return speed;
+	}
+	void setSpeed(int newSpeed) {
+		speed = newSpeed;
 	}
 	void addHealth(int add) {
 		if (add > 0 && health < 100) {
