@@ -2,6 +2,8 @@
 #include <iostream>
 #include "Scene.h"
 #include <iterator>
+#include <stdlib.h>
+#include <time.h>
 
 void Map::ReCenter()
 {

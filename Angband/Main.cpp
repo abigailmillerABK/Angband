@@ -3,57 +3,81 @@
 #include "Map.h"
 #include "Player.h"
 #include "Scene.h"
+#include "Buffer.h"
 
 #define KEY_UP 72
 #define KEY_DOWN 80
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
 
+void redraw(Scene* thisScene, Map myMap, Buffer* myBuffer) {
+	thisScene->Refresh();
+	myMap.draw();
+	myBuffer->print();
+}
+
+void interact(int x, int y, Object* target, Scene* thisScene, Buffer* myBuffer) {
+	if (target == nullptr) {
+		thisScene->myPlayer->Move(x, y);
+		thisScene->myPlayer->hasMoved = true;
+	}
+	else {
+		if (target->thisObject == "t_Enemy") {
+			Enemy* thisEnemy = dynamic_cast<Enemy*>(target);
+			myBuffer->addText(thisScene->myPlayer->Fight(thisEnemy));
+			if (thisEnemy->getHealth() == 0) {
+				myBuffer->addText("\n" + thisEnemy->name + " has been slain");
+				thisScene->enemyList.remove(*thisEnemy);
+			}
+		}
+	}
+}
+
 void main() {
+	srand(time(NULL));
 
 	int mapSize = 20;
 	int worldSize = 30;
 
-	Scene* thisScene = new Scene(worldSize);
+	Buffer* myBuffer = new Buffer();
+	Scene* thisScene = new Scene(worldSize, myBuffer);
 	Map myMap = Map(thisScene->myPlayer, thisScene, mapSize, worldSize);
 
 	myMap.draw();
 
 	//Check input
 	char keyPress = _getch();
+	Object* target;
 	//int keyVal = keyPress;
 
 	while (true) {
+		
+		thisScene->myPlayer->hasMoved = false;
 		switch (_getch()) {
 		case KEY_UP:
-			if (thisScene->isCollision(thisScene->myPlayer->GetX() - 1, thisScene->myPlayer->GetY()) == nullptr){
-				thisScene->myPlayer->Move(-1, 0);
-			}
-			thisScene->Refresh();
-			myMap.draw();
+			myBuffer->clear();
+			target = thisScene->isCollision(thisScene->myPlayer->GetX() - 1, thisScene->myPlayer->GetY());
+			interact(-1, 0, target, thisScene, myBuffer);
+			redraw(thisScene, myMap, myBuffer);
 			break;
 		case KEY_DOWN:
-			if (thisScene->isCollision(thisScene->myPlayer->GetX() + 1, thisScene->myPlayer->GetY()) == nullptr) {
-				thisScene->myPlayer->Move(1, 0);
-			}
-			thisScene->Refresh();
-			myMap.draw();
+			myBuffer->clear();
+			target = thisScene->isCollision(thisScene->myPlayer->GetX() + 1, thisScene->myPlayer->GetY());
+			interact(1, 0, target, thisScene, myBuffer);
+			redraw(thisScene, myMap, myBuffer);
 			break;
 		case KEY_RIGHT:
-			if (thisScene->isCollision(thisScene->myPlayer->GetX(), thisScene->myPlayer->GetY() + 1) == nullptr) {
-				thisScene->myPlayer->Move(0, 1);
-			}
-			thisScene->Refresh();
-			myMap.draw();
+			myBuffer->clear();
+			target = thisScene->isCollision(thisScene->myPlayer->GetX(), thisScene->myPlayer->GetY() + 1);
+			interact(0, 1, target, thisScene, myBuffer);
+			redraw(thisScene, myMap, myBuffer);
 			break;
 		case KEY_LEFT:
-			if (thisScene->isCollision(thisScene->myPlayer->GetX(), thisScene->myPlayer->GetY() - 1) == nullptr) {
-				thisScene->myPlayer->Move(0, -1);
-			}
-			thisScene->Refresh();
-			myMap.draw();
+			myBuffer->clear();
+			target = thisScene->isCollision(thisScene->myPlayer->GetX(), thisScene->myPlayer->GetY() - 1);
+			interact(0, -1, target, thisScene, myBuffer);
+			redraw(thisScene, myMap, myBuffer);
 			break;
 		}
-		std::cout << "\n\nAn event happens!!!";
 	}
 };

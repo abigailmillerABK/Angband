@@ -11,10 +11,12 @@ public:
 	{
 		thisObject = "t_Null";
 		icon = "\033[94m@\033[94m";
+		name = "Player";
 
-		health = 500;
-		attack = 100;
-		defense = 100;
+		health = 100;
+		attack = 5;
+		defense = 12;
 		speed = 6;
 	}
+	bool hasMoved;
 };

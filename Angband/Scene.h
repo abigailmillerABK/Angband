@@ -4,16 +4,23 @@
 #include "Wall.h"
 #include "Character.h"
 #include "Enemy.h"
+#include <stdlib.h>
+#include <time.h>
+#include "Buffer.h"
 
 class Scene {
 private:
 	int worldSize;
 	Object* end = new Object(-1, -1); //Border
+	Buffer* myBuffer;
+
 public:
+	std::string event;
 	Player* myPlayer = new Player(0, 0, worldSize);
 	std::list<Object> objList = {};
 	std::list<Enemy> enemyList = {};
-	Scene(int worldSize) {
+	Scene(int worldSize, Buffer* buffer) {
+		myBuffer = buffer;
 		this->worldSize = worldSize;
 		objList.push_back(Wall(2, 2));
 		objList.push_back(Wall(5, 8));
@@ -26,28 +33,63 @@ public:
 	}
 	void Refresh() //Tell all relevant object to act if they can
 	{
+		event = "";
 		std::list<Enemy>::iterator listPtr;
 		for (listPtr = enemyList.begin(); listPtr != enemyList.end(); listPtr++) {
 				std::string cmd = listPtr->Act();
+				//Combat
+				if (cmd == "Fight") {					
+					//If next to player, hit
+					if (myPlayer->hasMoved == false) {
+						myBuffer->addText(listPtr->Fight(myPlayer));
+					}
+					//if not next to player, pursue
+					else {
+						if (myPlayer->GetX() < listPtr->GetX() - 1) {
+							cmd = "Up";
+						}
+						else if (myPlayer->GetX() > listPtr->GetX() + 1) {
+							cmd = "Down";
+						}
+						else if (myPlayer->GetY() > listPtr->GetY() - 1) {
+							cmd = "Right";
+						}
+						else if (myPlayer->GetY() < listPtr->GetY() + 1) {
+							cmd = "Left";
+						}
+					}
+				}
 				//Movement
 				if (cmd == "Up") {
 					if (isCollision(listPtr->GetX() - 1, listPtr->GetY()) == nullptr) {
 						listPtr->Move(-1, 0);
 					}
-				}
-				if (cmd == "Down") {
-					if (isCollision(listPtr->GetX() + 1, listPtr->GetY())==nullptr) {
-						listPtr->Move(1, 0);
+					else if (isCollision(listPtr->GetX() - 1, listPtr->GetY()) == myPlayer) {
+						listPtr->inFight = true;
 					}
 				}
-				if (cmd == "Left") {
+				else if (cmd == "Down") {
+					if (isCollision(listPtr->GetX() + 1, listPtr->GetY()) == nullptr) {
+						listPtr->Move(1, 0);
+					}
+					else if (isCollision(listPtr->GetX() + 1, listPtr->GetY()) == myPlayer) {
+						listPtr->inFight = true;
+					}
+				}
+				else if (cmd == "Left") {
 					if (isCollision(listPtr->GetX(), listPtr->GetY()-1)==nullptr) {
 						listPtr->Move(0, -1);
 					}
+					else if (isCollision(listPtr->GetX(), listPtr->GetY() - 1) == myPlayer) {
+						listPtr->inFight = true;
+					}
 				}
-				if (cmd == "Right") { //Not happening?
+				else if (cmd == "Right") {
 					if (isCollision(listPtr->GetX(), listPtr->GetY()+1)==nullptr) {
 						listPtr->Move(0, 1);
+					}
+					else if (isCollision(listPtr->GetX(), listPtr->GetY() + 1) == myPlayer) {
+						listPtr->inFight = true;
 					}
 				}
 		}
