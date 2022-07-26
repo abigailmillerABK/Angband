@@ -9,7 +9,7 @@ class Player : public Character{
 public:
 	Player(int x, int y, int worldSize) :Character{ x, y, worldSize}
 	{
-		thisObject = "t_Null";
+		myType = Object::type::Null;
 		icon = "\033[94m@\033[94m";
 		name = "Player";
 

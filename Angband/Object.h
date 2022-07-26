@@ -7,7 +7,8 @@ protected:
 	int worldX;
 	int worldY;
 public:	
-	std::string thisObject;
+	enum type { Enemy, Item, Wall, Null };
+	type myType;
 	Object(int x, int y) {
 		worldX = x;
 		worldY = y;
@@ -22,8 +23,8 @@ public:
 		return false;
 	}
 	std::string icon;
-	int GetX();
-	int GetY();
+	int GetX() const;
+	int GetY() const;
 	virtual std::string Act() { return " "; };
 	virtual void Move(int x, int y) {};
 };

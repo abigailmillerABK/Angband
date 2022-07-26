@@ -22,13 +22,16 @@ void interact(int x, int y, Object* target, Scene* thisScene, Buffer* myBuffer) 
 		thisScene->myPlayer->hasMoved = true;
 	}
 	else {
-		if (target->thisObject == "t_Enemy") {
-			Enemy* thisEnemy = dynamic_cast<Enemy*>(target);
+		if (target->myType == Object::type::Enemy ) {
+			Enemy* thisEnemy = static_cast<Enemy*>(target);
 			myBuffer->addText(thisScene->myPlayer->Fight(thisEnemy));
 			if (thisEnemy->getHealth() == 0) {
 				myBuffer->addText("\n" + thisEnemy->name + " has been slain");
-				thisScene->enemyList.remove(*thisEnemy);
+				thisScene->objList.remove(thisEnemy);
 			}
+		}
+		if (target->myType == Object::type::Item) {
+
 		}
 	}
 }

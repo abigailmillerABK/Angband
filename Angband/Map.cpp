@@ -31,18 +31,12 @@ void Map::draw()
 	for (int j = worldX; j < (worldX + gridSize); j++) {
 		for (int k = worldY; k < (gridSize+worldY); k++) {
 			//Check whether matched with coordinates of object/character
-			std::list<Object>::iterator objectPtr;
+			std::list<Object*>::iterator objectPtr;
 			std::list<Enemy>::iterator enemyPtr;
 			bool isIcon = false;
-			for (enemyPtr = myScene->enemyList.begin(); enemyPtr != myScene->enemyList.end(); enemyPtr++) {
-				if (j == enemyPtr->GetX() && k == enemyPtr->GetY()) {
-					std::cout << enemyPtr->icon;
-					isIcon = true;
-					break;
-				}
-			}
 			if (isIcon == false) {
-				for (objectPtr = myScene->objList.begin(); objectPtr != myScene->objList.end(); objectPtr++) {
+				for (const Object* objectPtr : myScene->objList) //Use this FOR loop
+				{
 					if (j == objectPtr->GetX() && k == objectPtr->GetY()) {
 						std::cout << objectPtr->icon;
 						isIcon = true;

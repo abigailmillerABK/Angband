@@ -51,7 +51,7 @@ public:
 		std::string myRace = races[rand() % 6];
 		icon = myRace[0];
 		std::string title = titles[rand() % 6];
-		name = "a " + title + " " + myRace;
+		name = title + " " + myRace;
 		//random name
 	}
 	int getHealth() {

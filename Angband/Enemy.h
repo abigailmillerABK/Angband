@@ -9,7 +9,7 @@ public:
 
 	Enemy(int x, int y, int worldSize) :Character{ x, y, worldSize }
 	{
-		thisObject = "t_Enemy";
+		myType = Object::type::Enemy;
 		newRandom();
 		icon = "\u001b[31m"+icon+"\u001b[31m";
 		inFight = false;

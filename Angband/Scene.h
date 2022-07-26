@@ -17,7 +17,7 @@ private:
 	void drawWall(int xA,int yA, int xB, int yB) {
 		for (int j = xA; j <= xB; j++) {
 			for (int k = yA; k < yB; k++) {
-				objList.push_back(Wall(j, k));
+				objList.push_back(new Wall(j, k));
 			}
 		}
 
@@ -26,36 +26,38 @@ private:
 public:
 	std::string event;
 	Player* myPlayer = new Player(0, 0, worldSize);
-	std::list<Object> objList = {};
+	std::list<Object*> objList = {};
 	std::list<Enemy> enemyList = {};
 	std::list<Item> itemList = {};
 	Scene(int worldSize, Buffer* buffer) {
 		myBuffer = buffer;
 		this->worldSize = worldSize;
-		objList.push_back(Wall(2, 2));
-		objList.push_back(Wall(5, 8));
-		objList.push_back(Wall(5, 9));
-		objList.push_back(Wall(5, 10));
-		objList.push_back(Wall(8, 1));
-		objList.push_back(Wall(8, 2));
+		objList.push_back(new Wall(2, 2));
+		objList.push_back(new Wall(5, 8));
+		objList.push_back(new Wall(5, 9));
+		objList.push_back(new Wall(5, 10));
+		objList.push_back(new Wall(8, 1));
+		objList.push_back(new Wall(8, 2));
 		drawWall(10,5,15,10);
 		drawWall(20,20,28,28);
-		enemyList.push_back(Enemy(3, 3, worldSize));
-		enemyList.push_back(Enemy(5, 3, worldSize));
-		enemyList.push_back(Enemy(18, 3, worldSize));
-		enemyList.push_back(Enemy(20, 18, worldSize));
-		enemyList.push_back(Enemy(27, 20, worldSize));
-		itemList.push_back(Item(8,8));
+		objList.push_back(new Enemy(3, 3, worldSize));
+		objList.push_back(new Enemy(5, 3, worldSize));
+		objList.push_back(new Enemy(18, 3, worldSize));
+		objList.push_back(new Enemy(20, 18, worldSize));
+		objList.push_back(new Enemy(27, 20, worldSize));
+		objList.push_back(new Item(8,8));
 	}
 
 	void Refresh() //Tell all relevant object to act if they can
 	{
 		event = "";
-		std::list<Enemy>::iterator enemyPtr;
-		for (enemyPtr = enemyList.begin(); enemyPtr != enemyList.end(); enemyPtr++) {
+		std::list<Object*>::iterator thisObject;
+		for (thisObject = objList.begin(); thisObject != objList.end(); thisObject++) {
+			if ((*thisObject)->myType == Object::type::Enemy) {
+				Enemy* enemyPtr = static_cast<Enemy*>(*thisObject);
 				std::string cmd = enemyPtr->Act();
 				//Combat
-				if (cmd == "Fight") {					
+				if (cmd == "Fight") {
 					//If next to player, hit
 					if (myPlayer->hasMoved == false) {
 						myBuffer->addText(enemyPtr->Fight(myPlayer));
@@ -94,7 +96,7 @@ public:
 					}
 				}
 				else if (cmd == "Left") {
-					if (isCollision(enemyPtr->GetX(), enemyPtr->GetY()-1)==nullptr) {
+					if (isCollision(enemyPtr->GetX(), enemyPtr->GetY() - 1) == nullptr) {
 						enemyPtr->Move(0, -1);
 					}
 					else if (isCollision(enemyPtr->GetX(), enemyPtr->GetY() - 1) == myPlayer) {
@@ -102,13 +104,14 @@ public:
 					}
 				}
 				else if (cmd == "Right") {
-					if (isCollision(enemyPtr->GetX(), enemyPtr->GetY()+1)==nullptr) {
+					if (isCollision(enemyPtr->GetX(), enemyPtr->GetY() + 1) == nullptr) {
 						enemyPtr->Move(0, 1);
 					}
 					else if (isCollision(enemyPtr->GetX(), enemyPtr->GetY() + 1) == myPlayer) {
 						enemyPtr->inFight = true;
 					}
 				}
+			}
 		}
 	}
 	Object* isCollision(int x, int y) {
@@ -121,17 +124,17 @@ public:
 		if (x == myPlayer->GetX() && y == myPlayer->GetY()) {
 			return myPlayer;
 		}
-		//Collision with wall
-		for (listPtr = objList.begin(); listPtr != objList.end(); listPtr++) {
-			if (x == listPtr->GetX() && y == listPtr->GetY()) {
-				return &(*listPtr);
-			}
-		}
+		////Collision with wall
+		//for (listPtr = objList.begin(); listPtr != objList.end(); listPtr++) {
+		//	if (x == listPtr->GetX() && y == listPtr->GetY()) {
+		//		return &(*listPtr);
+		//	}
+		//}
 		//Collision with enemy
-		std::list<Enemy>::iterator enemPtr;
-		for (enemPtr = enemyList.begin(); enemPtr != enemyList.end(); enemPtr++) {
-			if (x == enemPtr->GetX() && y == enemPtr->GetY()) {
-				return &(*enemPtr);
+		std::list<Object*>::iterator objPtr;
+		for (objPtr = objList.begin(); objPtr != objList.end(); objPtr++) {
+			if (x == (*objPtr)->GetX() && y == (*objPtr)->GetY()) {
+				return &(**objPtr);
 			}
 		}
 		return nullptr;
