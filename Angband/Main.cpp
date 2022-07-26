@@ -16,7 +16,7 @@ void redraw(Scene* thisScene, Map myMap, Buffer* myBuffer) {
 	myBuffer->print();
 }
 
-void interact(int x, int y, Object* target, Scene* thisScene, Buffer* myBuffer) {
+void interact(int x, int y, Object* target, Scene* thisScene, Buffer* myBuffer, Player* myPlayer) {
 	if (target == nullptr) {
 		thisScene->myPlayer->Move(x, y);
 		thisScene->myPlayer->hasMoved = true;
@@ -31,7 +31,9 @@ void interact(int x, int y, Object* target, Scene* thisScene, Buffer* myBuffer) 
 			}
 		}
 		if (target->myType == Object::type::Item) {
-
+			Item* thisItem = static_cast<Item*>(target);
+			myBuffer->addText("You have found an item!\n");
+			//myPlayer->addItem(thisItem);
 		}
 	}
 }
@@ -60,25 +62,25 @@ void main() {
 		case KEY_UP:
 			myBuffer->clear();
 			target = thisScene->isCollision(thisScene->myPlayer->GetX() - 1, thisScene->myPlayer->GetY());
-			interact(-1, 0, target, thisScene, myBuffer);
+			interact(-1, 0, target, thisScene, myBuffer, thisScene->myPlayer);
 			redraw(thisScene, myMap, myBuffer);
 			break;
 		case KEY_DOWN:
 			myBuffer->clear();
 			target = thisScene->isCollision(thisScene->myPlayer->GetX() + 1, thisScene->myPlayer->GetY());
-			interact(1, 0, target, thisScene, myBuffer);
+			interact(1, 0, target, thisScene, myBuffer, thisScene->myPlayer);
 			redraw(thisScene, myMap, myBuffer);
 			break;
 		case KEY_RIGHT:
 			myBuffer->clear();
 			target = thisScene->isCollision(thisScene->myPlayer->GetX(), thisScene->myPlayer->GetY() + 1);
-			interact(0, 1, target, thisScene, myBuffer);
+			interact(0, 1, target, thisScene, myBuffer, thisScene->myPlayer);
 			redraw(thisScene, myMap, myBuffer);
 			break;
 		case KEY_LEFT:
 			myBuffer->clear();
 			target = thisScene->isCollision(thisScene->myPlayer->GetX(), thisScene->myPlayer->GetY() - 1);
-			interact(0, -1, target, thisScene, myBuffer);
+			interact(0, -1, target, thisScene, myBuffer, thisScene->myPlayer);
 			redraw(thisScene, myMap, myBuffer);
 			break;
 		}

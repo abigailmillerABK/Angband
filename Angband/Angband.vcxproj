@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Main.cpp" />

@@ -124,13 +124,7 @@ public:
 		if (x == myPlayer->GetX() && y == myPlayer->GetY()) {
 			return myPlayer;
 		}
-		////Collision with wall
-		//for (listPtr = objList.begin(); listPtr != objList.end(); listPtr++) {
-		//	if (x == listPtr->GetX() && y == listPtr->GetY()) {
-		//		return &(*listPtr);
-		//	}
-		//}
-		//Collision with enemy
+		////Collision with object
 		std::list<Object*>::iterator objPtr;
 		for (objPtr = objList.begin(); objPtr != objList.end(); objPtr++) {
 			if (x == (*objPtr)->GetX() && y == (*objPtr)->GetY()) {
