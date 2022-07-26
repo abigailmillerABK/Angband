@@ -1,3 +1,10 @@
+/*
+Author: Abigail Miller
+
+Description:
+Refresh all relevant object positions and redraw
+*/
+
 #include "Map.h"
 #include <iostream>
 #include "Scene.h"

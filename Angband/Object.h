@@ -1,3 +1,10 @@
+/*
+Author: Abigail Miller
+
+Description:
+an Object stores or changes their X and Y values
+*/
+
 #pragma once
 #include <iostream>
 #include <string.h>

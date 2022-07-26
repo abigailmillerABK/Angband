@@ -1,3 +1,10 @@
+/*
+Author: Abigail Miller
+
+Description:
+An Object that contains randomly generated attributes
+*/
+
 #include "Trinket.h"
 #include "Character.h"
 

@@ -1,3 +1,7 @@
+/*
+Author: Abigail Miller
+*/
+
 #pragma once
 #include "Player.h"
 #include "Scene.h"

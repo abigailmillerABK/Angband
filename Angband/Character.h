@@ -1,3 +1,10 @@
+/*
+Author: Abigail Miller
+
+Description:
+Contains character stats and name generation and defines combat interactions with target character.
+*/
+
 #pragma once
 #include "Object.h"
 #include <string>

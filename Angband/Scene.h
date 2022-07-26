@@ -1,3 +1,10 @@
+/*
+Author: Abigail Miller
+
+Description:
+Contains a list of all items in scene and controls their interactions with player
+*/
+
 #pragma once
 #include <list>
 #include <stdlib.h>
@@ -42,6 +49,14 @@ public:
 		objList.push_back(new Enemy(20, 18, worldSize));
 		objList.push_back(new Enemy(27, 20, worldSize));
 		objList.push_back(new Trinket(8,8));
+	}
+	~Scene() {
+		std::list<Object*>::iterator thisObject;
+		for (thisObject = objList.begin(); thisObject != objList.end(); thisObject++) {
+			delete (*thisObject);
+			(*thisObject) = nullptr;
+			objList.remove(*thisObject);
+		}
 	}
 
 	void Refresh() //Tell all relevant object to act if they can

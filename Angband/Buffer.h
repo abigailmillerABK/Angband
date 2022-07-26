@@ -1,3 +1,10 @@
+/*
+Author: Abigail Miller
+
+Description:
+Stores and prints all relevant text to screen in an orderly fashion.
+*/
+
 #pragma once
 #include <string>
 #include <iostream>
@@ -14,6 +21,10 @@ public:
 		text = "";
 	}
 	void print() {
-		std::cout << text;
+		if (text != "") {
+			std::cout << "\n****************************************\n";
+			std::cout << text;
+			std::cout << "\n\n****************************************\n";
+		}
 	}
 };

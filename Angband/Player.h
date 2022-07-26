@@ -1,3 +1,10 @@
+/*
+Author: Abigail Miller
+
+Description:
+The player is extended from Character and it contains a list of held items
+*/
+
 #pragma once
 #include <string>
 #include <list>

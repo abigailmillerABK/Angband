@@ -1,3 +1,12 @@
+/*
+Author: Abigail Miller
+
+Description:
+Move using arrow keys
+Run into red icons to fight enemies
+Move over yellow icons to collect tokens
+*/
+
 #include <conio.h>
 #include <iostream>;
 #include "Map.h"
@@ -9,6 +18,7 @@
 #define KEY_DOWN 80
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
+#define KEY_ESC 27
 
 void redraw(Scene* thisScene, Map myMap, Buffer* myBuffer) {
 	thisScene->Refresh();
@@ -52,13 +62,11 @@ void main() {
 
 	myMap.draw();
 
-	//Check input
-	char keyPress = _getch();
+	//Check input;
 	Object* target;
 	//int keyVal = keyPress;
 
-	while (true) {
-		
+	while (_getch()!= KEY_ESC) {
 		thisScene->myPlayer->hasMoved = false;
 		switch (_getch()) {
 		case KEY_UP:
@@ -87,4 +95,6 @@ void main() {
 			break;
 		}
 	}
+	system("CLS");
+	std::cout << "THANK YOU FOR PLAYING!!!\n";
 };
