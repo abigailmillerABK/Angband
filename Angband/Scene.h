@@ -1,13 +1,11 @@
 #pragma once
-#include "Object.h"
 #include <list>
-#include "Wall.h"
-#include "Character.h"
-#include "Enemy.h"
 #include <stdlib.h>
 #include <time.h>
+#include "Wall.h"
+#include "Enemy.h"
 #include "Buffer.h"
-#include "Item.h"
+#include "Trinket.h"
 
 class Scene {
 private:
@@ -27,8 +25,6 @@ public:
 	std::string event;
 	Player* myPlayer = new Player(0, 0, worldSize);
 	std::list<Object*> objList = {};
-	std::list<Enemy> enemyList = {};
-	std::list<Item> itemList = {};
 	Scene(int worldSize, Buffer* buffer) {
 		myBuffer = buffer;
 		this->worldSize = worldSize;
@@ -45,7 +41,7 @@ public:
 		objList.push_back(new Enemy(18, 3, worldSize));
 		objList.push_back(new Enemy(20, 18, worldSize));
 		objList.push_back(new Enemy(27, 20, worldSize));
-		objList.push_back(new Item(8,8));
+		objList.push_back(new Trinket(8,8));
 	}
 
 	void Refresh() //Tell all relevant object to act if they can

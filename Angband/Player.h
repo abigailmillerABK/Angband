@@ -2,17 +2,15 @@
 #include <string>
 #include <list>
 #include "Character.h"
-#include "Item.h"
+#include "Trinket.h"
 
 
 class Player : public Character{
 private:
-	Object* obj = new Object(5, 5);
-	Item* thisItem = new Item(0, 0);
-	//std::list<Item> itemList = {};
+	std::list<Trinket*> itemList = {};
 
 public:
-	Player(int x, int y, int worldSize) :Character{ x, y, worldSize}
+	Player(int x, int y, int worldSize) :Character{x, y, worldSize}
 	{
 		myType = Object::type::Null;
 		icon = "\033[94m@\033[94m";
@@ -25,5 +23,10 @@ public:
 	}
 	bool hasMoved;
 
-	//void addItem(Item* newItem);
+	void addItem(Trinket* newItem) {
+		itemList.push_back(newItem);
+	}
+	void useItem(Trinket* targetItem) {
+		itemList.remove(targetItem);
+	}
 };

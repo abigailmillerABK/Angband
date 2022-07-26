@@ -31,9 +31,11 @@ void interact(int x, int y, Object* target, Scene* thisScene, Buffer* myBuffer, 
 			}
 		}
 		if (target->myType == Object::type::Item) {
-			Item* thisItem = static_cast<Item*>(target);
+			Trinket* thisItem = static_cast<Trinket*>(target);
 			myBuffer->addText("You have found an item!\n");
-			//myPlayer->addItem(thisItem);
+			myPlayer->addItem(thisItem);
+			thisScene->objList.remove(thisItem);
+			myBuffer->addText("You quickly pocket the " + thisItem->title);
 		}
 	}
 }

@@ -1,10 +1,12 @@
-#include "Item.h"
+#include "Trinket.h"
+#include "Character.h"
 
-Item::Item(int x, int y) : Object(x, y) {
+Trinket::Trinket(int x, int y) : Object(x, y) {
 	icon = "\u001b[33mi\u001b[33m";
+	myType = Object::type::Item;
 	randomize();
 }
-void Item::randomize() {
+void Trinket::randomize() {
 	std::string nameList[5] = { "glorious","nifty","totally unique","lovely","rad" };
 	std::string typeList[5] = { "Sword","Book","Potion","Wand", "Mirror" };
 	std::string useList[4] = { "healing","destruction","general coolness","entanglement" };
@@ -16,7 +18,7 @@ void Item::randomize() {
 
 	value = 10;
 }
-void Item::useOn(Character* target) {
+void Trinket::useOn(Character* target) {
 	if (use == "healing") {
 		target->addHealth(value);
 	}
