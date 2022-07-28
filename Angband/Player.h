@@ -28,12 +28,20 @@ public:
 		defense = 12;
 		speed = 6;
 	}
+
 	bool hasMoved;
 
 	void addItem(Trinket* newItem) {
 		itemList.push_back(newItem);
 	}
-	void useItem(Trinket* targetItem) {
-		itemList.remove(targetItem);
+	void useItem(int itemNumber, Character* target) {
+		std::list<Trinket*>::iterator itemPtr;
+		int i = 0;
+		for (itemPtr = itemList.begin(); i == itemNumber; itemPtr++, i++) {
+			itemList.remove(*(itemPtr));
+		}
+	}
+	std::list<Trinket*> ListItems() {
+		return itemList;
 	}
 };

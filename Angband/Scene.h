@@ -49,6 +49,9 @@ public:
 		objList.push_back(new Enemy(20, 18, worldSize));
 		objList.push_back(new Enemy(27, 20, worldSize));
 		objList.push_back(new Trinket(8,8));
+		objList.push_back(new Trinket(30,30));
+		objList.push_back(new Trinket(3,20));
+		objList.push_back(new Trinket(20,3));
 	}
 	~Scene() {
 		std::list<Object*>::iterator thisObject;
@@ -71,7 +74,7 @@ public:
 				if (cmd == "Fight") {
 					//If next to player, hit
 					if (myPlayer->hasMoved == false) {
-						myBuffer->addText(enemyPtr->Fight(myPlayer));
+						myBuffer->AddText(Buffer::textBlock::events, enemyPtr->Fight(myPlayer));
 					}
 					//if not next to player, pursue
 					else {

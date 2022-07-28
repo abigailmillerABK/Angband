@@ -7,6 +7,8 @@ Refresh all relevant object positions and redraw
 
 #include "Map.h"
 #include <iostream>
+#include <windows.h>
+#include <stdio.h>
 #include "Scene.h"
 #include <iterator>
 #include <stdlib.h>
@@ -31,12 +33,12 @@ Map::Map(Player* player, Scene* scene, int gridSize, int worldSize)
 
 void Map::draw()
 {
-	std::cout << "\033[2J\033[1;1H"; //Clear screen
-	system("CLS");
 	//Draw screen
 	ReCenter();
-	for (int j = worldX; j < (worldX + gridSize); j++) {
-		for (int k = worldY; k < (gridSize+worldY); k++) {
+	int gridX = gridSize;
+	int gridY = gridSize * 2; //To square out the view
+	for (int j = worldX; j < (worldX + gridX); j++) {
+		for (int k = worldY; k < (gridY+worldY); k++) {
 			//Check whether matched with coordinates of object/character
 			std::list<Object*>::iterator objectPtr;
 			std::list<Enemy>::iterator enemyPtr;
