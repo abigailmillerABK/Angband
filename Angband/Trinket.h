@@ -15,8 +15,10 @@ class Trinket : public Object{
 	int value;
 
 public:
+	enum effectList { heal, slow, harm, cool };
+	effectList thisEffect;
 	std::string title;
 	Trinket(int x, int y);
 	void randomize();
-	void useOn(Character* target);
+	std::string useOn(Character* target);
 };

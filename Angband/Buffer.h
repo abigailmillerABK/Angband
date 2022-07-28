@@ -51,11 +51,11 @@ public:
 		if (myMenu == itemMenu) {
 			int itemNum = 0;
 			std::list<Trinket*>::iterator item;
-			std::list<Trinket*> itemList = myPlayer->ListItems();
 			AddText(textBlock::options, "OPTIONS:");
-			for (item = itemList.begin(); item != itemList.end(); item++) {
+			for (int i = 0; i < myPlayer->numItems;i++) {
+				Trinket* item = myPlayer->itemList[i];
 				AddText(textBlock::options, ("\n" + std::to_string(itemNum) + ":    "));
-				AddText(textBlock::options, (*item)->title);
+				AddText(textBlock::options, (item)->title);
 				itemNum++;
 			}
 		}
@@ -69,14 +69,18 @@ public:
 	
 	void SelectOption(int i, Player* myPlayer) {
 		if (myMenu == itemMenu) {
-			myMenu = targetMenu;
 			itemNum = i;
+			if (myPlayer->numItems > itemNum) {
+				myMenu = targetMenu;
+			}
 			return;
 		}
 		if (myMenu == targetMenu) {
 			myMenu = itemMenu;
 			//Character* target = new Character();
-			//myPlayer->useItem(i, target);
+			Character* target = myPlayer;
+			AddText(textBlock::events, "Player uses "+myPlayer->itemList[itemNum]->title+" on "+target->name +".");
+			AddText(textBlock::events, myPlayer->useItem(i, target));
 			return;
 		}
 	}

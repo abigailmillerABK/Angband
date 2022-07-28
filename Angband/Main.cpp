@@ -72,7 +72,7 @@ void main() {
 	GetWindowRect(console, &r); //stores the console's current dimensions
 
 	//MoveWindow(window_handle, x, y, width, height, redraw_window);
-	MoveWindow(console, 0, 0, 400, 800, TRUE);
+	MoveWindow(console, 0, 0, 500, 800, TRUE);
 
 	int mapSize = 15;
 	int worldSize = 30;
@@ -113,15 +113,14 @@ void main() {
 			target = thisScene->isCollision(thisScene->myPlayer->GetX(), thisScene->myPlayer->GetY() - 1);
 			interact(0, -1, target, thisScene, myBuffer, thisScene->myPlayer);
 			redraw(thisScene, myMap, myBuffer);
-			break;
-		
+			break;		
 		case KEY_ZERO:
 			myBuffer->Clear();
 			myBuffer->SelectOption(0,thisScene->myPlayer);
 			redraw(thisScene, myMap, myBuffer);
 			break;
-
 		default:
+			//_getch();
 			break;
 		}
 		

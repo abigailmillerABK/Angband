@@ -21,21 +21,37 @@ void Trinket::randomize() {
 	name = nameList[rand() % 5];
 	type = typeList[rand() % 4];
 	use = useList[rand() % 4];
+	if (use == "healing") {
+		thisEffect = heal;
+	}
+	else if (use == "destruction") {
+		thisEffect = harm;
+	}
+	else if (use == "general coolness") {
+		thisEffect = cool;
+	}
+	else if (use == "Entanglement") {
+		thisEffect = slow;
+	}
 	title = name + " " + type + " of " + use;
 
 	value = 10;
 }
-void Trinket::useOn(Character* target) {
-	if (use == "healing") {
+std::string Trinket::useOn(Character* target) {
+	if (thisEffect == heal) {
 		target->addHealth(value);
+		return (target->name+ " gains " + std::to_string(value) + " hp.");
 	}
-	else if (use == "destruction") {
+	else if (thisEffect == harm) {
 		target->addHealth(-value);
+		return (target->name + " loses " + std::to_string(value) + " hp.");
 	}
-	else if (use == "general coolness") {
-		target->name = "the cool " + target->name;
+	else if (thisEffect == cool) {
+		target->name = " the cool " + target->name;
+		return (target->name + " is now super cool.");
 	}
-	else if (use == "entanglement") {
+	else if (thisEffect == slow) {
 		target->setSpeed(0);
+		return (target->name + " can no longer seem to move");
 	}
 }

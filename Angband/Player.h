@@ -13,10 +13,10 @@ The player is extended from Character and it contains a list of held items
 
 
 class Player : public Character{
-private:
-	std::list<Trinket*> itemList = {};
 
 public:
+	int numItems = 0;
+	Trinket* itemList[5];
 	Player(int x, int y, int worldSize) :Character{x, y, worldSize}
 	{
 		myType = Object::type::Null;
@@ -32,16 +32,12 @@ public:
 	bool hasMoved;
 
 	void addItem(Trinket* newItem) {
-		itemList.push_back(newItem);
+		itemList[numItems] = newItem;
+		numItems++;
 	}
-	void useItem(int itemNumber, Character* target) {
-		std::list<Trinket*>::iterator itemPtr;
-		int i = 0;
-		for (itemPtr = itemList.begin(); i == itemNumber; itemPtr++, i++) {
-			itemList.remove(*(itemPtr));
-		}
-	}
-	std::list<Trinket*> ListItems() {
-		return itemList;
+	std::string useItem(int itemNumber, Character* target) {
+		return itemList[itemNumber]->useOn(target);
+		numItems--;
+		//refactor list
 	}
 };
